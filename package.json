@@ -1,12 +1,11 @@
 {
-  "name": "egghead-notetaker-updates",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "react-test-area",
+  "version": "0.0.1",
+  "description": "Nicks React test area",
   "scripts": {
-    "start": "webpack-dev-server --display-error-details --display-cached"
+    "start": "webpack-dev-server --display-error-details --display-cached --inline --colors --progress"
   },
-  "author": "Tyler McGinnis <tylermcginnis33@gmail.com> (http://tylermcginnis.com)",
+  "author": "Nick Lowman <digital@nicklowman.co.uk>",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.8.0",
@@ -23,12 +22,12 @@
     "babel-loader": "^6.2.0",
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
+    "webpack": "^1.12.9",
     "css-loader": "^0.23.1",
     "file-loader": "^0.8.5",
     "imports-loader": "^0.6.5",
     "style-loader": "^0.13.0",
     "stylus-loader": "^1.5.1",
-    "url-loader": "^0.5.7",
-    "webpack": "^1.12.9"
+    "url-loader": "^0.5.7"
   }
 }

@@ -1,5 +1,5 @@
-var webpack = require('webpack');
 var path = require('path');
+var cssPath = path.resolve(__dirname, 'css');
 
 module.exports = {
   entry: "./app/App.js",
@@ -9,22 +9,38 @@ module.exports = {
   },
   module: {
     loaders: [
-      { test: /\.jsx?$/, loader: 'babel', query: { presets: ['react', 'es2015']}},
-      { test: /\.styl$/, loader: 'style!css!stylus' },
-      { test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/font-woff'},
-      { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/octet-stream'},
-      { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file'},
-      { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=image/svg+xml'}
-    ],
-    noParse: [ path.join(__dirname, 'node_modules', 'angular2', 'bower_components', 'bundles') ]
+      {
+        test: /\.jsx?$/,
+        include: [path.resolve(__dirname, 'app')],
+        loader: 'babel',
+        query: {
+          presets: ['react', 'es2015']
+        }
+      },
+      { test: /\.styl$/, loader: 'style!css!stylus',
+        include: [cssPath]
+      },
+      { test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url?limit=10000&mimetype=application/font-woff',
+        include: [cssPath]
+      },
+      { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url?limit=10000&mimetype=application/octet-stream',
+        include: [cssPath]
+      },
+      { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'file',
+        include: [cssPath]
+      },
+      { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url?limit=10000&mimetype=image/svg+xml',
+        include: [cssPath]
+      }
+    ]
   },
-  devtool: 'source-map',
   devServer: {
     historyApiFallback: true,
-    port : 1970,
-    inline : true,
-    colors : true,
-    progress:true,
+    port : 8080,
     contentBase : 'public'
   }
 }
