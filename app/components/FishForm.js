@@ -1,8 +1,14 @@
+/*
+ Add Fish Form
+ <AddFishForm />
+ */
+
 import React from 'react';
+import autobind from 'autobind-decorator';
 
-
-var AddFishForm = React.createClass({
-  createFish : function(event) {
+@autobind
+class AddFishForm extends React.Component {
+  createFish(event) {
     // 1. Stop the form from submitting
     event.preventDefault();
     // 2. Take the data from the form and create an object
@@ -11,14 +17,15 @@ var AddFishForm = React.createClass({
       price : this.refs.price.value,
       status : this.refs.status.value,
       desc : this.refs.desc.value,
-      image : this.refs.image.value || "http://i.istockimg.com/file_thumbview_approve/36248396/5/stock-photo-36248396-blackened-cajun-sea-bass.jpg"
-    };
+      image : this.refs.image.value
+    }
 
     // 3. Add the fish to the App State
     this.props.addFish(fish);
     this.refs.fishForm.reset();
-  },
-  render : function() {
+  }
+
+  render() {
     return (
       <form className="fish-edit" ref="fishForm" onSubmit={this.createFish}>
         <input type="text" ref="name" placeholder="Fish Name"/>
@@ -28,12 +35,11 @@ var AddFishForm = React.createClass({
           <option value="unavailable">Sold Out!</option>
         </select>
         <textarea type="text" ref="desc" placeholder="Desc"></textarea>
-        <img src=""/>
         <input type="text" ref="image" placeholder="URL to Image" />
         <button type="submit">+ Add Item </button>
       </form>
     )
   }
-});
+};
 
 export default AddFishForm;
