@@ -2,23 +2,26 @@ var path = require('path');
 var cssPath = path.resolve(__dirname, 'css');
 
 module.exports = {
-  entry: "./app/main.js",
+  entry: ['babel-polyfill', "./app/main.js"],
   output: {
     path: "./public",
     filename: "bundle.js"
   },
   module: {
     loaders: [
+
       {
         test: /\.jsx?$/,
-        include: [path.resolve(__dirname, 'app')],
         loader: 'babel',
+        include: [path.resolve(__dirname, 'app')],
         query: {
-          presets: ['react', 'es2015', 'stage-0']
+          cacheDirectory: true,
+          plugins: ['transform-decorators-legacy'],
+          presets: ['es2015', 'stage-1', 'react']
         }
+
       },
-      { test: /\.styl$/,
-        loader: 'style!css!stylus',
+      { test: /\.styl$/, loader: 'style!css!stylus',
         include: [cssPath]
       },
       { test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
