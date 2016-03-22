@@ -1,9 +1,10 @@
 import React from 'react';
-import h from '../helpers';
 
+// Catalyst.LinkedStateMixin offers two-way binding for forms
+// and adds the linkState() method to the component
 var InventoryItem = React.createClass({
   render : function() {
-    let {linkState, fish, removeFish, id:key} = this.props;
+    let {linkState, removeFish, id:key} = this.props;
     return (
       <div className="fish-edit" key={key}>
         <input type="text" valueLink={linkState('fishes.'+ key +'.name')}/>

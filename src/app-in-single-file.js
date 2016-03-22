@@ -4,10 +4,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, History, Link } from 'react-router'
 var createBrowserHistory = require('history/lib/createBrowserHistory');
+
 // Firebase
 import Rebase from're-base';
 var base = Rebase.createClass('https://nick-of-the-day.firebaseio.com/');
-import Catalyst from 'react-catalyst';
+import Catalyst from 'react-catalyst'; //Collection of helpers developed for React.
 
 
  var App = React.createClass({
@@ -199,7 +200,6 @@ var OrderItem = React.createClass({
     if (!fish) {
       return <li>Sorry, fish no longer available! {removeButton}</li>
     }
-
     return (
       <li>
         {count}lbs

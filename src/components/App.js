@@ -1,46 +1,58 @@
 require('../../css/style.styl');
-
 import React from 'react';
 import Catalyst from 'react-catalyst';
 import Rebase from're-base'; // Firebase
 import FishList from './FishList';
-import AddFishForm from './FishForm';
 import Header from './Header';
-import Order from './Order';
-import Inventory from './Inventory';
-var base = Rebase.createClass('https://nick-of-the-day.firebaseio.com/');
+import Order from './OrderList';
+import Inventory from './InventoryList';
+var firebase = Rebase.createClass('https://nick-of-the-day.firebaseio.com/');
 
 
+// Catalyst.LinkedStateMixin offers two-way binding for forms
+// and adds the linkState() method to the component
 var App = React.createClass({
   mixins : [Catalyst.LinkedStateMixin],
+  // only called once when component is created
   getInitialState : function() {
-    console.log('getInitialState', this.state);
+    console.log('getInitialState()', this.state);
     return {
       fishes : {},
       order : {}
     }
   },
+  // this.props.params is coming from the router
+  // componentDidMount is called only once, so a good place for
+  // adding initialisation logic
   componentDidMount : function() {
-    console.log('componentDidMount', this.state);
-    base.syncState(this.props.params.storeId + '/fishes', {
+    console.log('componentDidMount()', this.state);
+    // this will keep the state.fishes in sync with the firebase db at
+    // https://nick-of-the-day.firebaseio.com/<storeId>/fishes
+    firebase.syncState(this.props.params.storeId + '/fishes', {
       context : this,
       state : 'fishes'
     });
-
+    this.getOrder();
+  },
+  // could also use componentDidUpdate()
+  componentWillUpdate : function(nextProps, nextState){
+    console.log('componentWillUpdate()', nextState);
+    this.saveOrder(nextState.order);
+  },
+  getOrder () {
     let localStorageRef = localStorage.getItem(`order-${this.props.params.storeId}`);
     if (localStorageRef) {
       let obj = JSON.parse(localStorageRef);
       this.setState({ order : obj });
     }
   },
-  componentWillUpdate : function(nextProps, nextState){
-    console.log('componentWillUpdate', nextState)
-    localStorage.setItem(`order-${this.props.params.storeId}`, JSON.stringify(nextState.order));
+  saveOrder (order) {
+    localStorage.setItem(`order-${this.props.params.storeId}`, JSON.stringify(order));
   },
   addToOrder : function(key) {
+    console.log('addToOrder()', this.state.order);
     this.state.order[key] = this.state.order[key] + 1 || 1;
     this.setState({ order : this.state.order });
-    console.log(this.state.order)
   },
   removeFromOrder : function(key){
     delete this.state.order[key];
@@ -67,10 +79,11 @@ var App = React.createClass({
     });
   },
   render : function() {
+    console.log('App render()');
     return (
       <div className="catch-of-the-day">
         <div className="menu">
-          <Header tagline="Fresh Seafood Market" />
+          <Header tagline="Nick's Seafood Market" />
           <FishList
             fishes={this.state.fishes}
             addToOrder={this.addToOrder}
@@ -83,7 +96,7 @@ var App = React.createClass({
         />
         <Inventory
           removeFish={this.removeFish}
-          linkState={this.linkState}
+          linkState={this.linkState} //Catalyst.LinkedStateMixin adds this method for two-way form binding
           fishes={this.state.fishes}
           addFish={this.addFish}
           loadSamples={this.loadSamples}
@@ -92,6 +105,5 @@ var App = React.createClass({
     )
   }
 });
-
 export default App;
 

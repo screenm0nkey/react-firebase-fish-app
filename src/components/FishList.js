@@ -1,5 +1,5 @@
 import React from 'react';
-import Fish from './Fish';
+import Fish from './FishItem';
 
 var FishList = React.createClass({
   render : function () {

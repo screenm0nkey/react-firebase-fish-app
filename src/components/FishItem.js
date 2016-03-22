@@ -6,15 +6,15 @@ import autobind from 'autobind-decorator';
 class Fish extends React.Component {
 
   onButtonClick() {
-    console.log("Going to add the fish: ", this.props.index);
+    console.log("onButtonClick() Going to add the fish: ", this.props.index);
     var key = this.props.index;
     this.props.addToOrder(key);
   }
 
   render() {
-    var details = this.props.details;
-    var isAvailable = (details.status === 'available' ? true : false);
-    var buttonText = (isAvailable ? 'Add To Order' : 'Sold Out!');
+    let {details} = this.props;
+    let isAvailable = (details.status === 'available' ? true : false);
+    let buttonText = (isAvailable ? 'Add To Order' : 'Sold Out!');
     return (
       <li className="menu-fish">
         <img src={details.image} alt={details.name} />
