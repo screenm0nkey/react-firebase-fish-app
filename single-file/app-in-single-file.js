@@ -1,5 +1,5 @@
 require('../css/style.styl');
-import  h from './helpers';
+import  h from './../src/helpers';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, History, Link } from 'react-router'
@@ -63,7 +63,7 @@ import Catalyst from 'react-catalyst'; //Collection of helpers developed for Rea
    },
   loadSamples : function() {
     this.setState({
-      fishes : require('./sample-fishes')
+      fishes : require('./../src/sample-fishes')
     });
   },
   render : function() {
